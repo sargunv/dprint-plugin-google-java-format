@@ -1,0 +1,51 @@
+package example;
+
+import static java.util.stream.Collectors.joining;
+
+import java.util.List;
+import java.util.Map;
+
+public final class Messy {
+  private static final String GREETING =
+      "hello there, this is a long string literal that should be split across lines when reflowed";
+  private final Map<String, List<Integer>> data;
+
+  /**
+   * Creates it.
+   *
+   * @param data the data
+   */
+  Messy(Map<String, List<Integer>> data) {
+    this.data = data;
+  }
+
+  public String describe() {
+    return data.entrySet().stream()
+        .filter(e -> !e.getValue().isEmpty())
+        .map(e -> e.getKey() + "=" + e.getValue().size())
+        .collect(joining(", ", "[", "]"));
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Messy other)) return false;
+    return data.equals(other.data);
+  }
+
+  @Override
+  public int hashCode() {
+    return data.hashCode();
+  }
+
+  static int sw(int x) {
+    switch (x) {
+      case 1 -> {
+        return 2;
+      }
+      default -> {
+        return 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "resources": [
+    { "glob": "LICENSE" },
+    { "glob": "GOOGLE_JAVA_FORMAT_LICENSE" },
+    { "glob": "plugin.properties" }
+  ]
+}

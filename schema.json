@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "dprint-plugin-google-java-format configuration",
+  "type": "object",
+  "properties": {
+    "style": {
+      "description": "The google-java-format style.",
+      "type": "string",
+      "default": "google",
+      "oneOf": [
+        {
+          "const": "google",
+          "description": "Google Java Style: 2-space indents."
+        },
+        {
+          "const": "aosp",
+          "description": "Android Open Source Project style: 4-space indents and AOSP import order."
+        }
+      ]
+    },
+    "lineWidth": {
+      "description": "The maximum line length. Defaults to dprint's global lineWidth, else 100.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "formatJavadoc": {
+      "description": "Format Javadoc comments.",
+      "type": "boolean",
+      "default": true
+    },
+    "reorderModifiers": {
+      "description": "Put modifiers in the order the Java Language Specification recommends.",
+      "type": "boolean",
+      "default": true
+    },
+    "sortImports": {
+      "description": "Sort imports.",
+      "type": "boolean",
+      "default": true
+    },
+    "removeUnusedImports": {
+      "description": "Remove unused imports.",
+      "type": "boolean",
+      "default": true
+    },
+    "reflowLongStrings": {
+      "description": "Split string literals that run past the line width.",
+      "type": "boolean",
+      "default": true
+    },
+    "newLineKind": {
+      "description": "Line endings. Defaults to dprint's global newLineKind, else auto.",
+      "type": "string",
+      "default": "auto",
+      "oneOf": [
+        { "const": "auto", "description": "Keep the input's line endings." },
+        { "const": "lf", "description": "Use \\n." },
+        { "const": "crlf", "description": "Use \\r\\n." },
+        { "const": "system", "description": "Use the platform's line endings." }
+      ]
+    }
+  }
+}
