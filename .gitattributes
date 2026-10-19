@@ -8,3 +8,11 @@ gradle/wrapper/**         linguist-vendored=true
 
 # Generated lockfiles.
 mise.lock                 linguist-generated=true
+
+src/main/resources/GOOGLE_JAVA_FORMAT_LICENSE        linguist-vendored=true
+
+# Parity fixtures: inputs mostly copied from other projects, outputs from the
+# google-java-format CLI.
+src/test/resources/parity/input/**                   linguist-vendored=true
+src/test/resources/parity/google/**                  linguist-generated=true
+src/test/resources/parity/aosp/**                    linguist-generated=true
