@@ -64,12 +64,14 @@ Linux (x86_64, aarch64), macOS (aarch64), and Windows (x86_64).
 
 ## Performance
 
-Formatting with `dprint fmt` on a 32-core Linux machine:
+Formatting [commons-lang](https://github.com/apache/commons-lang) (630 files)
+and [java-system-bindings](https://github.com/sargunv/java-system-bindings) (552
+files) with `dprint fmt` on a 32-core Linux machine:
 
-| Corpus                           | dprint-plugin-exec + google-java-format's native binary | dprint-plugin-google-java-format |
-| -------------------------------- | ------------------------------------------------------- | -------------------------------- |
-| commons-lang (630 files)         | 3.8 s                                                   | 2.3 s                            |
-| java-system-bindings (552 files) | 1.2 s                                                   | 0.43 s                           |
+| Setup                                                   | commons-lang | java-system-bindings |
+| ------------------------------------------------------- | ------------ | -------------------- |
+| dprint-plugin-exec + google-java-format's native binary | 3.8 s        | 1.2 s                |
+| dprint-plugin-google-java-format                        | 2.3 s        | 0.43 s               |
 
 ## License
 
