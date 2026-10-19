@@ -50,6 +50,7 @@ class ResolvedConfig(
   fun resolvedJson(): String = buildJsonObject {
     put("style", style)
     put("lineWidth", options.maxLineLength())
+    put("useTabs", options.useTabs())
     put("formatJavadoc", options.formatJavadoc())
     put("reorderModifiers", options.reorderModifiers())
     put("sortImports", sortImports)
@@ -104,6 +105,7 @@ fun resolve(global: JsonObject, raw: JsonObject): ResolvedConfig {
     take("lineWidth", "a positive integer") { it.int(1) }
       ?: global["lineWidth"]?.int(1)
       ?: JavaFormatterOptions.Style.GOOGLE.maxLineLength()
+  val useTabs = take("useTabs", "a boolean") { it.bool() } ?: global["useTabs"]?.bool() ?: false
   val formatJavadoc = flag("formatJavadoc")
   val reorderModifiers = flag("reorderModifiers")
   val sortImports = flag("sortImports")
@@ -115,7 +117,7 @@ fun resolve(global: JsonObject, raw: JsonObject): ResolvedConfig {
     } ?: global["newLineKind"]?.newLineKind() ?: NewLineKind.AUTO
   props.keys.forEach { diagnostics += it to "Unknown property in configuration" }
 
-  val styleBuilder = JavaFormatterOptions.Style.builder().maxLineLength(lineWidth)
+  val styleBuilder = JavaFormatterOptions.Style.builder().maxLineLength(lineWidth).useTabs(useTabs)
   if (style == "aosp") styleBuilder.aosp() else styleBuilder.google()
   val options =
     JavaFormatterOptions.builder()

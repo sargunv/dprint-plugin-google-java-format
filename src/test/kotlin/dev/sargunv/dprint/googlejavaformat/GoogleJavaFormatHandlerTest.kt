@@ -71,5 +71,9 @@ class GoogleJavaFormatHandlerTest {
       "class A {\n    void f() {}\n}\n",
       client.format("A.java", text, override = """{"style":"aosp"}""").body,
     )
+    assertEquals(
+      "class A {\n\tvoid f() {}\n}\n",
+      client.format("A.java", text, override = """{"useTabs":true}""").body,
+    )
   }
 }

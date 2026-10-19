@@ -32,6 +32,7 @@ Options go under the `googleJavaFormat` key:
 | --------------------- | ------------------------------ | --------------------------------- |
 | `style`               | `google`, `aosp`               | `google`                          |
 | `lineWidth`           | integer                        | global `lineWidth`, else 100      |
+| `useTabs`             | boolean                        | global `useTabs`, else `false`    |
 | `formatJavadoc`       | boolean                        | `true`                            |
 | `reorderModifiers`    | boolean                        | `true`                            |
 | `sortImports`         | boolean                        | `true`                            |
@@ -40,12 +41,14 @@ Options go under the `googleJavaFormat` key:
 | `newLineKind`         | `auto`, `lf`, `crlf`, `system` | global `newLineKind`, else `auto` |
 
 `style` matches the CLI's `--style`, `lineWidth` its `--max-line-length`, and
-the boolean options its `--skip-*` flags.
+the other boolean options its `--skip-*` flags. `useTabs` has no CLI equivalent:
+it indents with one tab per level, counted as 2 columns in the google style and
+4 in aosp.
 
-Like other dprint plugins, `lineWidth` and `newLineKind` default to dprint's
-global options. If your global `lineWidth` isn't 100, set `"googleJavaFormat": {
-"lineWidth": 100 }` to keep google-java-format's default. The global
-`indentWidth` and `useTabs` don't apply: each style sets its own indents.
+Like other dprint plugins, `lineWidth`, `useTabs`, and `newLineKind` default to
+dprint's global options. If your global `lineWidth` isn't 100, set
+`"googleJavaFormat": { "lineWidth": 100 }` to keep google-java-format's default.
+The global `indentWidth` doesn't apply: each style sets its own indents.
 
 Range formatting is not supported.
 

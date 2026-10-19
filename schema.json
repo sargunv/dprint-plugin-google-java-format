@@ -23,6 +23,10 @@
       "type": "integer",
       "minimum": 1
     },
+    "useTabs": {
+      "description": "Indent with tabs, one per indent level. Defaults to dprint's global useTabs, else false.",
+      "type": "boolean"
+    },
     "formatJavadoc": {
       "description": "Format Javadoc comments.",
       "type": "boolean",

@@ -22,7 +22,7 @@ class ConfigTest {
     assertEquals(
       expected(
         """
-        |{"style":"google","lineWidth":100,"formatJavadoc":true,"reorderModifiers":true,
+        |{"style":"google","lineWidth":100,"useTabs":false,"formatJavadoc":true,"reorderModifiers":true,
         |"sortImports":true,"removeUnusedImports":true,"reflowLongStrings":true,
         |"newLineKind":"auto"}
         """
@@ -45,9 +45,9 @@ class ConfigTest {
     val config = resolveConfig(global, "{}")
     assertEquals(emptyList(), config.diagnostics)
     assertEquals(80, config.options.maxLineLength())
-    // Indentation comes from the style; global indentWidth and useTabs don't apply.
+    assertEquals(true, config.options.useTabs())
+    // Indent sizes come from the style; global indentWidth doesn't apply.
     assertEquals(1, config.options.indentationMultiplier())
-    assertEquals(false, config.options.useTabs())
     assertEquals(NewLineKind.CRLF, config.newLineKind)
   }
 
@@ -55,10 +55,11 @@ class ConfigTest {
   fun pluginConfigWinsOverGlobal() {
     val config =
       resolveConfig(
-        """{"lineWidth":80,"newLineKind":"crlf"}""",
-        """{"lineWidth":120,"newLineKind":"lf"}""",
+        """{"lineWidth":80,"useTabs":true,"newLineKind":"crlf"}""",
+        """{"lineWidth":120,"useTabs":false,"newLineKind":"lf"}""",
       )
     assertEquals(120, config.options.maxLineLength())
+    assertEquals(false, config.options.useTabs())
     assertEquals(NewLineKind.LF, config.newLineKind)
   }
 
@@ -66,7 +67,7 @@ class ConfigTest {
   fun allKeys() {
     val plugin =
       """
-      |{"style":"aosp","lineWidth":90,"formatJavadoc":false,"reorderModifiers":false,
+      |{"style":"aosp","lineWidth":90,"useTabs":true,"formatJavadoc":false,"reorderModifiers":false,
       |"sortImports":false,"removeUnusedImports":false,"reflowLongStrings":false,
       |"newLineKind":"system"}
       """
@@ -94,7 +95,7 @@ class ConfigTest {
         """
         |{"style":"palantir","lineWidth":"wide","formatJavadoc":"yes","reorderModifiers":1,
         |"sortImports":null,"removeUnusedImports":"no","reflowLongStrings":0,
-        |"newLineKind":"cr","useTabs":true}
+        |"newLineKind":"cr","useTabs":"yes","indentWidth":4}
         """
           .trimMargin(),
       )
@@ -102,20 +103,21 @@ class ConfigTest {
       listOf(
         "style" to "Expected one of google, aosp, got \"palantir\"",
         "lineWidth" to "Expected a positive integer, got \"wide\"",
+        "useTabs" to "Expected a boolean, got \"yes\"",
         "formatJavadoc" to "Expected a boolean, got \"yes\"",
         "reorderModifiers" to "Expected a boolean, got 1",
         "sortImports" to "Expected a boolean, got null",
         "removeUnusedImports" to "Expected a boolean, got \"no\"",
         "reflowLongStrings" to "Expected a boolean, got 0",
         "newLineKind" to "Expected one of auto, lf, crlf, system, got \"cr\"",
-        "useTabs" to "Unknown property in configuration",
+        "indentWidth" to "Unknown property in configuration",
       ),
       config.diagnostics,
     )
     // Invalid values fall back to the defaults.
     assertEquals(resolved(), resolved(plugin = """{"style":"palantir","lineWidth":"wide"}"""))
     assertEquals(
-      expected("""{"propertyName":"useTabs","message":"Unknown property in configuration"}"""),
+      expected("""{"propertyName":"indentWidth","message":"Unknown property in configuration"}"""),
       Json.parseToJsonElement(config.diagnosticsJson()).jsonArray.last(),
     )
   }

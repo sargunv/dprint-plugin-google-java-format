@@ -47,6 +47,21 @@ class FormatTest {
   }
 
   @Test
+  fun useTabs() {
+    val code = "class A{void f(){if(x){g(aaaaaaaa,bbbbbbbb,cccccccc);}}}"
+    // A tab is one indent level, which is 2 columns in google style and 4 in aosp.
+    assertEquals(
+      "class A {\n\tvoid f() {\n\t\tif (x) {\n\t\t\tg(\n\t\t\t\t\taaaaaaaa, bbbbbbbb,\n" +
+        "\t\t\t\t\tcccccccc);\n\t\t}\n\t}\n}\n",
+      format(code, """{"useTabs":true,"lineWidth":30}"""),
+    )
+    assertEquals(
+      "class A {\n\tvoid f() {\n\t\tif (x) {\n\t\t\tg(aaaaaaaa, bbbbbbbb, cccccccc);\n\t\t}\n\t}\n}\n",
+      format(code, global = """{"useTabs":true}"""),
+    )
+  }
+
+  @Test
   fun imports() {
     val code = "import java.util.List;\nimport a.B;\nimport a.A;\nclass C{A a;B b;}\n"
     assertEquals("import a.A;\nimport a.B;\n\nclass C {\n  A a;\n  B b;\n}\n", format(code))
