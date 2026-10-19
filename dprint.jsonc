@@ -29,6 +29,6 @@
     "npm:@dprint/toml@0.9.0",
     "npm:dprint-plugin-yaml@0.6.0",
     "npm:@dprint/exec@0.8.0/plugin.json@9d6234ea05810c775f388c2a4cce82b9116b69294b65e0e1e9d64f1446283ef3",
-    "https://plugins.dprint.dev/sargunv/ktfmt-0.65.0.json@d111be4dd67ed7d3fea905a23e29e8284c1db5389bb38b6a83e54055421b62e9"
+    "https://plugins.dprint.dev/sargunv/ktfmt-0.65.0.json@d355d4440dda00c0e315b5c39669f417bcfa76b64b68591fa1818f7a1f6b1005"
   ]
 }
